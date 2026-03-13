@@ -6,9 +6,8 @@ const PAGES_DIR = path.join(__dirname, "pages");
 const RENAME_DIR = path.join(__dirname, "rename");
 const MAP_FILE = path.join(RENAME_DIR, "rename-map.json");
 
-function isRandomName(filename) {
-  const nameWithoutExt = filename.replace(".html", "");
-  return /^[a-z0-9]{8}$/.test(nameWithoutExt);
+function isRandomName(name) {
+  return /^[a-z0-9]{8}$/.test(name);
 }
 
 function generateRandomName() {
@@ -24,7 +23,19 @@ function isHtmlFile(filename) {
   return filename === "index.html" || filename === "index-encrypted.html";
 }
 
-function scanDirectory(dir, renameMap, changes) {
+function findHtmlInDirectory(dir) {
+  const items = fs.readdirSync(dir);
+  for (const item of items) {
+    const fullPath = path.join(dir, item);
+    const stat = fs.statSync(fullPath);
+    if (stat.isFile() && isHtmlFile(item)) {
+      return fullPath;
+    }
+  }
+  return null;
+}
+
+function collectFolders(dir, folders) {
   const items = fs.readdirSync(dir);
 
   items.forEach((item) => {
@@ -32,44 +43,8 @@ function scanDirectory(dir, renameMap, changes) {
     const stat = fs.statSync(fullPath);
 
     if (stat.isDirectory()) {
-      scanDirectory(fullPath, renameMap, changes);
-    } else if (stat.isFile() && isHtmlFile(item)) {
-      if (isRandomName(item)) {
-        console.log(
-          `跳过已随机命名的文件: ${path.relative(PAGES_DIR, fullPath)}`,
-        );
-        return;
-      }
-
-      const content = fs.readFileSync(fullPath, "utf8");
-      const title = extractTitle(content);
-
-      if (!title) {
-        console.log(
-          `警告: ${path.relative(PAGES_DIR, fullPath)} 没有 <title> 标签，跳过`,
-        );
-        return;
-      }
-
-      let newName;
-      do {
-        newName = generateRandomName() + ".html";
-      } while (fs.existsSync(path.join(path.dirname(fullPath), newName)));
-
-      const newPath = path.join(path.dirname(fullPath), newName);
-      const relativePath = path.relative(PAGES_DIR, fullPath);
-      const newRelativePath = path.relative(PAGES_DIR, newPath);
-
-      fs.renameSync(fullPath, newPath);
-      renameMap[title] = {
-        oldPath: relativePath,
-        newPath: newRelativePath,
-      };
-
-      console.log(
-        `✓ 重命名: ${relativePath} -> ${newRelativePath} (标题: ${title})`,
-      );
-      changes.count++;
+      folders.push(fullPath);
+      collectFolders(fullPath, folders);
     }
   });
 }
@@ -84,16 +59,84 @@ function processHtmlFiles() {
     renameMap = JSON.parse(fs.readFileSync(MAP_FILE, "utf8"));
   }
 
-  const changes = { count: 0 };
+  const folders = [];
+  collectFolders(PAGES_DIR, folders);
 
-  scanDirectory(PAGES_DIR, renameMap, changes);
+  folders.sort((a, b) => b.length - a.length);
 
-  if (changes.count > 0) {
+  let changes = 0;
+
+  folders.forEach((folderPath) => {
+    const folderName = path.basename(folderPath);
+
+    if (isRandomName(folderName)) {
+      console.log(
+        `跳过已加密的文件夹: ${path.relative(PAGES_DIR, folderPath)}`,
+      );
+      return;
+    }
+
+    const htmlFile = findHtmlInDirectory(folderPath);
+    if (!htmlFile) {
+      console.log(
+        `警告: ${path.relative(PAGES_DIR, folderPath)} 没有找到 HTML 文件，跳过`,
+      );
+      return;
+    }
+
+    const content = fs.readFileSync(htmlFile, "utf8");
+    const title = extractTitle(content);
+
+    if (!title) {
+      console.log(
+        `警告: ${path.relative(PAGES_DIR, htmlFile)} 没有 <title> 标签，跳过`,
+      );
+      return;
+    }
+
+    let newFolderName;
+    do {
+      newFolderName = generateRandomName();
+    } while (fs.existsSync(path.join(path.dirname(folderPath), newFolderName)));
+
+    const newFolderPath = path.join(path.dirname(folderPath), newFolderName);
+
+    let newHtmlName;
+    do {
+      newHtmlName = generateRandomName() + ".html";
+    } while (fs.existsSync(path.join(folderPath, newHtmlName)));
+
+    const htmlFileName = path.basename(htmlFile);
+    const newHtmlPath = path.join(folderPath, newHtmlName);
+
+    fs.renameSync(htmlFile, newHtmlPath);
+
+    fs.renameSync(folderPath, newFolderPath);
+
+    const oldRelativePath = path.relative(PAGES_DIR, htmlFile);
+    const newRelativePath = path.join(newFolderName, newHtmlName);
+
+    renameMap[title] = {
+      oldFolderName: folderName,
+      newFolderName: newFolderName,
+      oldHtmlName: htmlFileName,
+      newHtmlName: newHtmlName,
+      oldPath: oldRelativePath,
+      newPath: newRelativePath,
+    };
+
+    console.log(`✓ 重命名文件夹: ${folderName} -> ${newFolderName}`);
+    console.log(`  重命名文件: ${htmlFileName} -> ${newHtmlName}`);
+    console.log(`  标题: ${title}`);
+    changes++;
+  });
+
+  if (changes > 0) {
     fs.writeFileSync(MAP_FILE, JSON.stringify(renameMap, null, 2), "utf8");
-    console.log(`\n完成! 共重命名 ${changes.count} 个文件`);
+    console.log(`\n完成! 共处理 ${changes} 个文件夹`);
     console.log(`映射文件已保存至: ${MAP_FILE}`);
   } else {
-    console.log("\n没有需要重命名的文件");
+    console.log("\n没有需要处理的文件夹");
   }
 }
 
