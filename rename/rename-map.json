@@ -1,34 +1,50 @@
 {
-  "数字粉碎机": {
-    "oldFolderName": "数字粉碎机",
-    "newFolderName": "637efec3",
-    "oldHtmlName": "index.html",
-    "newHtmlName": "2badf008.html",
-    "oldPath": "数字粉碎机/index.html",
-    "newPath": "637efec3/2badf008.html"
-  },
-  "贪吃蛇学因数倍数ipad": {
-    "oldFolderName": "贪吃蛇因数倍数ipad",
-    "newFolderName": "8eca873a",
-    "oldHtmlName": "index.html",
-    "newHtmlName": "5a14493c.html",
-    "oldPath": "贪吃蛇因数倍数ipad/index.html",
-    "newPath": "8eca873a/5a14493c.html"
-  },
-  "七巧板基础": {
-    "oldFolderName": "七巧板基础",
-    "newFolderName": "17f33205",
-    "oldHtmlName": "index-encrypted.html",
-    "newHtmlName": "045ceae2.html",
-    "oldPath": "七巧板基础/index-encrypted.html",
-    "newPath": "17f33205/045ceae2.html"
-  },
-  "正方体展开图折叠模拟器": {
+  "正方体展开图折叠模拟器 - 蓝色教育版": {
     "oldFolderName": "立方体展开图",
-    "newFolderName": "5dc6cdc2",
+    "newFolderName": "443092cb",
     "oldHtmlName": "index-encrypted.html",
-    "newHtmlName": "f82492b6.html",
+    "newHtmlName": "5a779fdd.html",
     "oldPath": "立方体展开图/index-encrypted.html",
-    "newPath": "5dc6cdc2/f82492b6.html"
+    "newPath": "443092cb/5a779fdd.html"
+  },
+  "扭蛋机抽奖": {
+    "oldFolderName": "扭蛋机抽奖",
+    "newFolderName": "2d59e960",
+    "oldHtmlName": "index-encrypted.html",
+    "newHtmlName": "4c49c7e8.html",
+    "oldPath": "扭蛋机抽奖/index-encrypted.html",
+    "newPath": "2d59e960/4c49c7e8.html"
+  },
+  "数学大富翁 - Math Monopoly": {
+    "oldFolderName": "数学大富翁",
+    "newFolderName": "e9a38395",
+    "oldHtmlName": "index-encrypted.html",
+    "newHtmlName": "ab2ec481.html",
+    "oldPath": "数学大富翁/index-encrypted.html",
+    "newPath": "e9a38395/ab2ec481.html"
+  },
+  "数学勇士：怪物大作战": {
+    "oldFolderName": "攻击怪物",
+    "newFolderName": "0b01b4e9",
+    "oldHtmlName": "index-encrypted.html",
+    "newHtmlName": "12a249dc.html",
+    "oldPath": "攻击怪物/index-encrypted.html",
+    "newPath": "0b01b4e9/12a249dc.html"
+  },
+  "趣味筛数表": {
+    "oldFolderName": "筛数表",
+    "newFolderName": "cf04b3e4",
+    "oldHtmlName": "index-encrypted.html",
+    "newHtmlName": "f763ad0d.html",
+    "oldPath": "筛数表/index-encrypted.html",
+    "newPath": "cf04b3e4/f763ad0d.html"
+  },
+  "凑数大挑战": {
+    "oldFolderName": "凑数",
+    "newFolderName": "bb3b8da9",
+    "oldHtmlName": "index-encrypted.html",
+    "newHtmlName": "47e6297a.html",
+    "oldPath": "凑数/index-encrypted.html",
+    "newPath": "bb3b8da9/47e6297a.html"
   }
 }
