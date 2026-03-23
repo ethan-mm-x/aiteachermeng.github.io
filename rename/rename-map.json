@@ -1,12 +1,4 @@
 {
-  "正方体展开图折叠模拟器 - 蓝色教育版": {
-    "oldFolderName": "立方体展开图",
-    "newFolderName": "443092cb",
-    "oldHtmlName": "index-encrypted.html",
-    "newHtmlName": "5a779fdd.html",
-    "oldPath": "立方体展开图/index-encrypted.html",
-    "newPath": "443092cb/5a779fdd.html"
-  },
   "扭蛋机抽奖": {
     "oldFolderName": "扭蛋机抽奖",
     "newFolderName": "2d59e960",
@@ -46,5 +38,21 @@
     "newHtmlName": "47e6297a.html",
     "oldPath": "凑数/index-encrypted.html",
     "newPath": "bb3b8da9/47e6297a.html"
+  },
+  "正方体展开图折叠模拟器 - 蓝色教育版": {
+    "oldFolderName": "立方体展开图",
+    "newFolderName": "43fabe05",
+    "oldHtmlName": "index-encrypted.html",
+    "newHtmlName": "06b2f4c7.html",
+    "oldPath": "立方体展开图/index-encrypted.html",
+    "newPath": "43fabe05/06b2f4c7.html"
+  },
+  "数字粉碎机": {
+    "oldFolderName": "数字粉碎机",
+    "newFolderName": "99b40bf8",
+    "oldHtmlName": "index-encrypted.html",
+    "newHtmlName": "e1fa34eb.html",
+    "oldPath": "数字粉碎机/index-encrypted.html",
+    "newPath": "99b40bf8/e1fa34eb.html"
   }
 }
